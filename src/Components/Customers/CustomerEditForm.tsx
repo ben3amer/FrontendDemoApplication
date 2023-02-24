@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from 'react'
-import { createCustomer } from '../../Api/Customers';
+import { updateCustomer, getCustomerbyId } from '../../Api/Customers';
 import Customer  from "../../Models/Customer";
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -10,13 +10,19 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
-export default function CustomerForm() {
+export default function CustomerEditForm(idCustomer : number) {
   const [customer,setCustomer] = useState<Customer>({
     id : -1,
     firstName : '',
     lastName : '',
     phone : ''
   });
+  useEffect(()=>{
+    getCustomerbyId(idCustomer)
+    .then((Response) => {
+        setCustomer(Response.data);
+    })
+  })
 
   const handleChange = (event : any) => {
     setCustomer({
@@ -26,7 +32,7 @@ export default function CustomerForm() {
 }
   const handleSubmit = (event : any) => {
     event.preventDefault();
-    createCustomer(customer)
+    updateCustomer(customer)
       .then((res) => {
       })
       .catch((err) => console.log(err));
@@ -36,7 +42,7 @@ export default function CustomerForm() {
     <>
      <form autoComplete="off" onSubmit={handleSubmit}>
       <Card>
-        <CardHeader subheader="The information can be edited" title="Customrr" />
+        <CardHeader subheader="The information can be edited" title="Customer" />
         <Divider />
         <CardContent>
           <Grid container spacing={3}>
