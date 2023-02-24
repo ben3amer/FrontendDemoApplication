@@ -9,8 +9,11 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import { CleaningServices } from '@mui/icons-material';
 
-export default function CustomerEditForm(idCustomer : number) {
+type Props = {idCustomer: number}
+
+export default function CustomerEditForm({} : Props) {
   const [customer,setCustomer] = useState<Customer>({
     id : -1,
     firstName : '',
@@ -18,11 +21,12 @@ export default function CustomerEditForm(idCustomer : number) {
     phone : ''
   });
   useEffect(()=>{
-    getCustomerbyId(idCustomer)
-    .then((Response) => {
-        setCustomer(Response.data);
-    })
-  })
+    console.log("");
+    //getCustomerbyId()
+    //.then((Response) => {
+      //  setCustomer(Response.data);
+  //})
+  });
 
   const handleChange = (event : any) => {
     setCustomer({
@@ -34,6 +38,7 @@ export default function CustomerEditForm(idCustomer : number) {
     event.preventDefault();
     updateCustomer(customer)
       .then((res) => {
+        
       })
       .catch((err) => console.log(err));
   };
