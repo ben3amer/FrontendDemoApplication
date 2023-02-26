@@ -1,6 +1,6 @@
 import React,{useState, useEffect} from 'react'
 import { createCustomer } from '../../Api/Customers';
-import Customer  from "../../Models/Customer";
+import newCustomer  from "../../Models/NewCustomer";
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
@@ -9,16 +9,18 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
 
 export default function CustomerForm() {
-  const [customer,setCustomer] = useState<Customer>({
-    id : -1,
+  const navigate = useNavigate();
+  const [customer,setCustomer] = useState<newCustomer>({
     firstName : '',
     lastName : '',
     phone : ''
   });
 
   const handleChange = (event : any) => {
+    console.log(customer)
     setCustomer({
       ...customer,
       [event.target.name]: event.target.value
@@ -28,6 +30,8 @@ export default function CustomerForm() {
     event.preventDefault();
     createCustomer(customer)
       .then((res) => {
+        console.log(res);
+        navigate("/");
       })
       .catch((err) => console.log(err));
   };
@@ -36,7 +40,7 @@ export default function CustomerForm() {
     <>
      <form autoComplete="off" onSubmit={handleSubmit}>
       <Card>
-        <CardHeader subheader="The information can be edited" title="Customrr" />
+        <CardHeader subheader="The information can be edited" title="Customer" />
         <Divider />
         <CardContent>
           <Grid container spacing={3}>

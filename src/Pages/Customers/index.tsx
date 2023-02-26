@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { deleteCustomer, getCustomers } from '../../Api/Customers';
+import { deleteCustomer, getCustomerbyId, getCustomers } from '../../Api/Customers';
 import Customer  from "../../Models/Customer";
 import TableContainer from '@mui/material/TableContainer';
 import Table from '@mui/material/Table';
@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Customers() {
   const [listCustomers, setListCustomers] = useState([]);
+  const navigate = useNavigate()
   useEffect(() => {
       getCustomers()
           .then((response) => {
@@ -55,8 +56,13 @@ export default function Customers() {
           Customers
         </Typography>
         <Box sx={{ m: 1 }}>
-          <Button color="primary" variant="contained">
-            Add Formateurs
+          <Button 
+            color="primary" 
+            variant="contained" 
+            onClick={() => {
+              navigate("/addCutomer");
+            }}>
+            Add new customer
           </Button>
         </Box>
       </Box>
@@ -95,7 +101,8 @@ export default function Customers() {
                     aria-label="edit" 
                     size="medium"
                     onClick={() => {
-                      
+                      const idCustomer = customer.id.toString()
+                      navigate(`/editCustomer/:${idCustomer}`)
                     }}>
                 <Edit />
               </IconButton>

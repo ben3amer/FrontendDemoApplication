@@ -9,24 +9,31 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { CleaningServices } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 
-type Props = {idCustomer: number}
+interface CustomerEditFormProps {
+  id: number;
+}
 
-export default function CustomerEditForm({} : Props) {
+export default function CustomerEditForm( {id} : CustomerEditFormProps) {
+  const navigate = useNavigate();
   const [customer,setCustomer] = useState<Customer>({
     id : -1,
     firstName : '',
     lastName : '',
     phone : ''
   });
+  const idCustomer : number = id;
   useEffect(()=>{
-    console.log("");
-    //getCustomerbyId()
-    //.then((Response) => {
-      //  setCustomer(Response.data);
-  //})
-  });
+    //console.log(idCustomer);
+    getCustomerbyId(idCustomer)
+    .then((Response) => {
+        setCustomer(Response.data);
+  })
+  .catch((error)=>{
+    console.error(error)
+  })
+  },[idCustomer]);
 
   const handleChange = (event : any) => {
     setCustomer({
@@ -38,7 +45,8 @@ export default function CustomerEditForm({} : Props) {
     event.preventDefault();
     updateCustomer(customer)
       .then((res) => {
-        
+        console.log(res)
+        navigate("/")
       })
       .catch((err) => console.log(err));
   };
