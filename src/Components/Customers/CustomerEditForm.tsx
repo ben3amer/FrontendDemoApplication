@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react'
+import { useState , useEffect } from 'react'
 import { updateCustomer, getCustomerbyId } from '../../Api/Customers';
 import Customer  from "../../Models/Customer";
 import Card from '@mui/material/Card';
@@ -17,30 +17,30 @@ interface CustomerEditFormProps {
 
 export default function CustomerEditForm( {id} : CustomerEditFormProps) {
   const navigate = useNavigate();
+  const idCustomer : number = id;
   const [customer,setCustomer] = useState<Customer>({
     id : -1,
     firstName : '',
     lastName : '',
     phone : ''
   });
-  const idCustomer : number = id;
+  
   useEffect(()=>{
-    //console.log(idCustomer);
     getCustomerbyId(idCustomer)
     .then((Response) => {
         setCustomer(Response.data);
-  })
-  .catch((error)=>{
-    console.error(error)
-  })
-  },[idCustomer]);
+    })
+    .catch((error)=>{
+      console.error(error)
+  })},[idCustomer]);
 
   const handleChange = (event : any) => {
     setCustomer({
       ...customer,
       [event.target.name]: event.target.value
-  });
-}
+    })
+  }
+  
   const handleSubmit = (event : any) => {
     event.preventDefault();
     updateCustomer(customer)
@@ -101,8 +101,7 @@ export default function CustomerEditForm( {id} : CustomerEditFormProps) {
             display: "flex",
             justifyContent: "flex-end",
             p: 2,
-          }}
-        >
+          }}>
           <Button color="primary" variant="contained" type="submit">
             Save
           </Button>

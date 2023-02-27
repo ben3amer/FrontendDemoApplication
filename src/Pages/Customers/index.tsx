@@ -23,8 +23,6 @@ export default function Customers() {
       getCustomers()
           .then((response) => {
                   setListCustomers(response.data.customers)
-                  console.log(response.data)
-                  console.log(listCustomers)
           }
           )
           .catch((error) => {

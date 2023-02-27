@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react'
+import { useState } from 'react'
 import { createCustomer } from '../../Api/Customers';
 import newCustomer  from "../../Models/NewCustomer";
 import Card from '@mui/material/Card';
@@ -24,8 +24,9 @@ export default function CustomerForm() {
     setCustomer({
       ...customer,
       [event.target.name]: event.target.value
-  });
-}
+    });
+  }
+
   const handleSubmit = (event : any) => {
     event.preventDefault();
     createCustomer(customer)
@@ -35,7 +36,7 @@ export default function CustomerForm() {
       })
       .catch((err) => console.log(err));
   };
-  
+
   return (
     <>
      <form autoComplete="off" onSubmit={handleSubmit}>
