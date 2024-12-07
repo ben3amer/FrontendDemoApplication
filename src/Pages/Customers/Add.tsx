@@ -1,12 +1,11 @@
-import React, { useState, useEffect, Component } from 'react'
 import { Box, Container, Typography } from "@mui/material";
 import CustomerForm from '../../Components/Customers/CustomerForm';
-type Props = {}
 
-export default function AddCustomer({}: Props) {
+
+export default function AddCustomer() {
   return (
     <>
-    <title> AddCustomer </title>
+    <Typography> AddCustomer </Typography>
     <Box
         component="main"
         sx={{

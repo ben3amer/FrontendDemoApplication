@@ -1,35 +1,33 @@
-import { useState } from 'react'
-import { createCustomer } from '../../Api/Customers';
-import newCustomer  from "../../Models/NewCustomer";
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
-import Divider from '@mui/material/Divider';
-import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import CardContent from "@mui/material/CardContent";
+import Divider from "@mui/material/Divider";
+import Grid from "@mui/material/Grid2";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
+import Customer from "../../Business/Customer/Customer";
+import { useAppThunkDispatch } from "../../store";
+import { createCustomerAction } from "../../Business/Customer/actions/createCustomer";
 
 export default function CustomerForm() {
   const navigate = useNavigate();
-  const [customer,setCustomer] = useState<newCustomer>({
-    firstName : '',
-    lastName : '',
-    phone : ''
-  });
+  const [customer, setCustomer] = useState<Customer>();
+  const dispatch = useAppThunkDispatch();
 
-  const handleChange = (event : any) => {
-    console.log(customer)
+  const handleChange = (event: any) => {
+    console.log(customer);
     setCustomer({
       ...customer,
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
-  }
+  };
 
-  const handleSubmit = (event : any) => {
+  const handleSubmit = (event: any) => {
     event.preventDefault();
-    createCustomer(customer)
+    dispatch(createCustomerAction(customer))
       .then((res) => {
         console.log(res);
         navigate("/");
@@ -38,14 +36,16 @@ export default function CustomerForm() {
   };
 
   return (
-    <>
-     <form autoComplete="off" onSubmit={handleSubmit}>
+    <form autoComplete="off" onSubmit={handleSubmit}>
       <Card>
-        <CardHeader subheader="The information can be edited" title="Customer" />
+        <CardHeader
+          subheader="The information can be edited"
+          title="Customer"
+        />
         <Divider />
         <CardContent>
           <Grid container spacing={3}>
-            <Grid item md={6} xs={12}>
+            <Grid size={12}>
               <TextField
                 fullWidth
                 helperText="Please specify the first name"
@@ -57,7 +57,7 @@ export default function CustomerForm() {
                 variant="outlined"
               />
             </Grid>
-            <Grid item md={6} xs={12}>
+            <Grid size={12}>
               <TextField
                 fullWidth
                 label="Last name"
@@ -68,7 +68,7 @@ export default function CustomerForm() {
                 variant="outlined"
               />
             </Grid>
-            <Grid item md={6} xs={12}>
+            <Grid size={12}>
               <TextField
                 fullWidth
                 label="Phone"
@@ -95,6 +95,5 @@ export default function CustomerForm() {
         </Box>
       </Card>
     </form>
-    </>
   );
 }

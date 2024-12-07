@@ -1,31 +1,36 @@
-import Box from '@mui/material/Box'
-import Container from '@mui/material/Container'
-import Typography from '@mui/material/Typography'
-import CustomerEditForm from '../../Components/Customers/CustomerEditForm'
-import { useParams } from "react-router-dom";
-type Props = {}
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import CustomerEditForm from "../../Components/Customers/CustomerEditForm";
 
-export default function EditCustomer({}: Props) {
-  const { id } = useParams<{ id: string }>();
-  const idCustomerString: string = id ?? ""; 
-  const newIDCutomerString : string  = idCustomerString.substr(1,idCustomerString.length);
-  const idCustomer : number = parseInt(newIDCutomerString) ?? 0;
+interface IEditCustomerProps {
+  customerId?: string;
+}
+
+export default function EditCustomer(props: Readonly<IEditCustomerProps>) {
+  const { customerId } = props;
+
+  const ParseIdToInt = (id: string) => {
+    return id ? parseInt(id?.slice(1, id.length)) : 0;
+  };
+
   return (
     <>
-    <title> EditCustomer </title>
-    <Box
+      <Typography> EditCustomer </Typography>
+      <Box
         component="main"
         sx={{
           flexGrow: 1,
           py: 8,
-      }}>
-      <Container maxWidth="lg">
-        <Typography sx={{ mb: 3 }} variant="h4">
+        }}
+      >
+        <Container maxWidth="lg">
+          <Typography sx={{ mb: 3 }} variant="h4">
             Edit Customer
-        </Typography>
-        <CustomerEditForm  id = {idCustomer}/>
-      </Container>
-    </Box>
-  </>
-  )
+          </Typography>
+          <CustomerEditForm id={ParseIdToInt(customerId)} />
+        </Container>
+      </Box>
+    </>
+  );
 }

@@ -1,65 +1,69 @@
-import { useState , useEffect } from 'react'
-import { updateCustomer, getCustomerbyId } from '../../Api/Customers';
-import Customer  from "../../Models/Customer";
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
-import Divider from '@mui/material/Divider';
-import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import Customer from "../../Business/Customer/Customer";
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import CardContent from "@mui/material/CardContent";
+import Divider from "@mui/material/Divider";
+import Grid from "@mui/material/Grid2";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
+import { useAppSelector, useAppThunkDispatch } from "../../store";
+import { getCustomerAction } from "../../Business/Customer/actions/getCustomerById";
+import { updateCustomerAction } from "../../Business/Customer/actions/updateCustomer";
 
 interface CustomerEditFormProps {
-  id: number;
+  id?: number;
 }
 
-export default function CustomerEditForm( {id} : CustomerEditFormProps) {
+export default function CustomerEditForm(
+  props: Readonly<CustomerEditFormProps>
+) {
   const navigate = useNavigate();
-  const idCustomer : number = id;
-  const [customer,setCustomer] = useState<Customer>({
-    id : -1,
-    firstName : '',
-    lastName : '',
-    phone : ''
-  });
-  
-  useEffect(()=>{
-    getCustomerbyId(idCustomer)
-    .then((Response) => {
-        setCustomer(Response.data);
-    })
-    .catch((error)=>{
-      console.error(error)
-  })},[idCustomer]);
+  const idCustomer: number = props.id;
+  const [customer, setCustomer] = useState<Customer>();
+  const dispatch = useAppThunkDispatch();
+  const currentCustomer = useAppSelector(
+    (x) => x.application.customer.selectedCustomer
+  );
 
-  const handleChange = (event : any) => {
+  useEffect(() => {
+    dispatch(getCustomerAction(idCustomer));
+  }, [idCustomer]);
+
+  useEffect(() => {
+    setCustomer(currentCustomer);
+  }, [currentCustomer]);
+
+  const handleChange = (event: any) => {
     setCustomer({
       ...customer,
-      [event.target.name]: event.target.value
-    })
-  }
-  
-  const handleSubmit = (event : any) => {
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleSubmit = (event: any) => {
     event.preventDefault();
-    updateCustomer(customer)
+    dispatch(updateCustomerAction(customer))
       .then((res) => {
-        console.log(res)
-        navigate("/")
+        console.log(res);
+        navigate("/");
       })
       .catch((err) => console.log(err));
   };
-  
+
   return (
-    <>
-     <form autoComplete="off" onSubmit={handleSubmit}>
+    <form autoComplete="off" onSubmit={handleSubmit}>
       <Card>
-        <CardHeader subheader="The information can be edited" title="Customer" />
+        <CardHeader
+          subheader="The information can be edited"
+          title="Customer"
+        />
         <Divider />
         <CardContent>
           <Grid container spacing={3}>
-            <Grid item md={6} xs={12}>
+            <Grid size={12}>
               <TextField
                 fullWidth
                 helperText="Please specify the first name"
@@ -71,7 +75,7 @@ export default function CustomerEditForm( {id} : CustomerEditFormProps) {
                 variant="outlined"
               />
             </Grid>
-            <Grid item md={6} xs={12}>
+            <Grid size={12}>
               <TextField
                 fullWidth
                 label="Last name"
@@ -82,7 +86,7 @@ export default function CustomerEditForm( {id} : CustomerEditFormProps) {
                 variant="outlined"
               />
             </Grid>
-            <Grid item md={6} xs={12}>
+            <Grid size={12}>
               <TextField
                 fullWidth
                 label="Phone"
@@ -101,13 +105,13 @@ export default function CustomerEditForm( {id} : CustomerEditFormProps) {
             display: "flex",
             justifyContent: "flex-end",
             p: 2,
-          }}>
+          }}
+        >
           <Button color="primary" variant="contained" type="submit">
             Save
           </Button>
         </Box>
       </Card>
     </form>
-    </>
   );
 }

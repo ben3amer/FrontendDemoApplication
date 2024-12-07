@@ -1,8 +1,7 @@
-import Customer  from "../Models/Customer";
-import newCustomer  from "../Models/NewCustomer";
+import Customer  from "../Business/Customer/Customer";
 import api from "./Api";
 
-export const createCustomer = (body: newCustomer) => {
+export const createCustomer = (body: Customer) => {
     return api.post("/Customers/Create", body);
 };
 
