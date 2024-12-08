@@ -5,6 +5,8 @@ import { persistStore } from "redux-persist";
 import { configureStore, ThunkDispatch } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
+const __DEV__ = process.env.NODE_ENV !== "production";
+
 const logger = createLogger({
   collapsed: true,
   diff: true,
@@ -27,7 +29,8 @@ export const setupStore = (preloadedState?: RootState) => {
       getDefaultMiddleware({
         immutableCheck: false,
         serializableCheck: false,
-      }),
+      }).concat([logger]),
+    devTools: __DEV__,
   });
 };
 

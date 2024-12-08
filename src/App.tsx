@@ -1,11 +1,8 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import "./App.css";
-import Customers from "./Pages/Customers";
-import AddCustomer from "./Pages/Customers/Add";
-import EditCustomer from "./Pages/Customers/Edit";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import LoadingComponent from "./Components/Display/LoadingComponent";
+import { routes } from "./Routes";
 
 interface ApplicationProps {
   store: any;
@@ -13,20 +10,6 @@ interface ApplicationProps {
 }
 
 const App = (props: ApplicationProps) => {
-  const routes = [
-    {
-      path: "/",
-      element: <Customers />,
-    },
-    {
-      path: "/addCutomer",
-      element: <AddCustomer />,
-    },
-    {
-      path: "/editCustomer/:id",
-      element: <EditCustomer />,
-    },
-  ];
   return (
     <Provider store={props.store}>
       <PersistGate loading={<LoadingComponent />} persistor={props.persistor}>
@@ -36,7 +19,7 @@ const App = (props: ApplicationProps) => {
               <Route key={path} path={path} element={element} />
             ))}
           </Routes>
-        </Router>{" "}
+        </Router>
       </PersistGate>
     </Provider>
   );

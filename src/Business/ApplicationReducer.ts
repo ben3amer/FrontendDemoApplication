@@ -20,8 +20,8 @@ export interface CustomerState {
   isCustomerFetchedSuccessfully?: boolean;
   isCustomerUpdatedtedSuccessfully?: boolean;
   isCustomerDeletedSuccessfully?: boolean;
-  errorOnCreation?: boolean;
-  errorOnUpdating?: boolean;
-  errorOnDeleting?: boolean;
-  errorOnFetching?: boolean;
+  errorOnCreation?: string;
+  errorOnUpdating?: string;
+  errorOnDeleting?: string;
+  errorOnFetching?: string;
 }

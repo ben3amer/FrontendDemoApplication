@@ -22,12 +22,12 @@ export default function Customers() {
   const navigate = useNavigate();
   const dispatch = useAppThunkDispatch();
   const listCustomers = useAppSelector(
-    (x) => x.application.customer.allCustomersList
+    (x) => x.application?.customer?.allCustomersList
   );
 
   useEffect(() => {
     dispatch(getAllCustomersAction);
-  }, [listCustomers]);
+  }, [dispatch]);
 
   const handleDelete = async (id: number) => {
     await dispatch(deleteCustomerAction(id));
@@ -93,8 +93,7 @@ export default function Customers() {
                     aria-label="edit"
                     size="medium"
                     onClick={() => {
-                      const idCustomer = customer?.id?.toString();
-                      navigate(`/editCustomer/:${idCustomer}`);
+                      navigate(`/editCustomer/:${customer?.id}`);
                     }}
                   >
                     <Edit />

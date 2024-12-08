@@ -1,5 +1,6 @@
 import { getCustomers } from "../../../Api/Customers";
 import { getAllCustomersReducer } from "../CustomerReducer";
+import mockedCustomers from "../../../mockData";
 
 export const getAllCustomersAction = function () {
   return async (dispatch) => {
@@ -14,7 +15,7 @@ export const getAllCustomersAction = function () {
           getAllCustomersReducer({
             GetAllCustomersActionPayload: {
               status: "SUCCESS",
-              aggregate: result,
+              aggregate: mockedCustomers,
             },
           })
         );

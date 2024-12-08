@@ -1,6 +1,8 @@
 import appInitialState from "../../initialState";
 import { CustomerState } from "../ApplicationReducer";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import storageSession from 'redux-persist/lib/storage/session';
+import { persistReducer } from 'redux-persist';
 
 const INITIAL_STATE: CustomerState = appInitialState.application.customers;
 
@@ -89,4 +91,9 @@ export const {
   getAllCustomersReducer,
 } = customerSlice.actions;
 
-export default customerSlice.reducer;
+const persistConfig = {
+    storage: storageSession,
+    key: 'root',
+  };
+  
+  export default persistReducer(persistConfig, customerSlice.reducer);

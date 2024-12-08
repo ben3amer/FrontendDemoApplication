@@ -53,7 +53,7 @@ export default function CustomerForm() {
                 name="firstName"
                 onChange={handleChange}
                 required
-                value={customer.firstName}
+                value={customer?.firstName}
                 variant="outlined"
               />
             </Grid>
@@ -64,7 +64,7 @@ export default function CustomerForm() {
                 name="lastName"
                 onChange={handleChange}
                 required
-                value={customer.lastName}
+                value={customer?.lastName}
                 variant="outlined"
               />
             </Grid>
@@ -75,7 +75,7 @@ export default function CustomerForm() {
                 name="phone"
                 onChange={handleChange}
                 required
-                value={customer.phone}
+                value={customer?.phone}
                 variant="outlined"
               />
             </Grid>

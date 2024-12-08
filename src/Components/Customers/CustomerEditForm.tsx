@@ -30,7 +30,7 @@ export default function CustomerEditForm(
 
   useEffect(() => {
     dispatch(getCustomerAction(idCustomer));
-  }, [idCustomer]);
+  }, [idCustomer, dispatch]);
 
   useEffect(() => {
     setCustomer(currentCustomer);
@@ -71,7 +71,7 @@ export default function CustomerEditForm(
                 name="firstName"
                 onChange={handleChange}
                 required
-                value={customer.firstName}
+                value={customer?.firstName}
                 variant="outlined"
               />
             </Grid>
@@ -82,7 +82,7 @@ export default function CustomerEditForm(
                 name="lastName"
                 onChange={handleChange}
                 required
-                value={customer.lastName}
+                value={customer?.lastName}
                 variant="outlined"
               />
             </Grid>
@@ -93,7 +93,7 @@ export default function CustomerEditForm(
                 name="phone"
                 onChange={handleChange}
                 required
-                value={customer.phone}
+                value={customer?.phone}
                 variant="outlined"
               />
             </Grid>
